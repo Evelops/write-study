@@ -1,0 +1,29 @@
+[ApiController.java]
+
+   /**
+    * 20221011 Add
+    * 매일 새벽 03시에 MyNB 로그인 이력을 B 테이블 적재
+    */
+
+    @RequestMapping(value="/insertIfCuCustSleep")
+    public void doInsertIfCuCustSleepExec() {
+        log.info("doInsertIfCuCustSleepExec 수기 스케줄러 실행");
+        insertIfCuCustSleep();
+    }
+
+    @Scheduled(cron = "0 0 3 * * *")
+    public void insertIfCuCustSleep() {
+        log.info("insertIfCuCustSleep 스케줄러 실행");
+        this.apiMapper.insertIfCuCustSleep();
+    }
+
+[ApiMapper.java]
+  /**
+   * 20221011, Add, MyNB 로그인 이력을 B 테이블 적재
+	 */
+    public void insertIfCuCustSleep();
+
+[ApiMapper.xml]
+	<select id="insertIfCuCustSleep" resultType="map">
+	    EXEC IF_Cu_CustSleep_Exec
+	</select>
